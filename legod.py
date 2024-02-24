@@ -272,6 +272,9 @@ class legod(object):
             print(e)
     def detection(self):
         sw=1
+        if not self.check_stop_status():
+            if not self.check_exsit():
+                self.pause()
         while 1==1:
             game=self.check_exsit()
             if(game):
