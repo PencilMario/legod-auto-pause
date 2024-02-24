@@ -159,7 +159,7 @@ class legod(object):
                 return True,msg['data']
                 break
             else:
-                return False,msg['msg']
+                return False,msg['msg']  
                 break
     
     def check_stop_status(self) -> bool:
