@@ -49,6 +49,7 @@ class TrayIcon(object):
             win32con.WM_DESTROY: self.OnDestroy,
             win32con.WM_COMMAND: self.OnCommand,
             win32con.WM_USER + 20: self.OnTaskbarNotify,
+            win32con.WM_ENDSESSION: self.OnEndSession
         }
         # 注册窗口类
         wndclass = win32gui.WNDCLASS()
@@ -176,6 +177,11 @@ class TrayIcon(object):
             os._exit(0)
         else:
             print ("Unknown command -", id)
+    def OnEndSession(self, hwnd, msg, wparam, lparam):
+        self.stopflag=True
+        msg=self.legod.pause()
+        self.taskbar_msg("退出并暂停时长结果",msg)
+        return 0
     def taskbar_msg(self,title,msg):
         # Taskbar icon
         nid =self.nid[4]
