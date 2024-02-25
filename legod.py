@@ -45,6 +45,7 @@ class legod(object):
                         }
         self.Dir=filedir
         self.stopp=False
+        self.lasttime = 0
         self.conf=self.load()
         print('''
 ***************************************************
@@ -167,12 +168,23 @@ class legod(object):
         通过账号信息判断是否暂停
         0:正常,1:暂停
         '''
-        status=self.get_account_info()[1]['pause_status_id']
+        
+        data=self.get_account_info()[1]['pause_status_id']
+        status = data['pause_status_id']
+        self.lasttime = data['expiry_time_samp']
         if(status == 1):
             return True
         else:
             return False
+    
+    def check_lasttime(self) -> bool:
+        '''
+        查看剩余时长（秒）
+        '''
+        return self.get_account_info()[1]['expiry_time_samp']
+
         
+
     def pause(self):
         '''
         暂停加速,调用官网api

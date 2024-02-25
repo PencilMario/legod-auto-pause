@@ -84,6 +84,11 @@ class TrayIcon(object):
             "" if not msg else "| 自动暂停[{}]".format(msg)
         ))
 
+    def _seconds_to_hms(seconds):
+        hours, remainder = divmod(seconds, 3600)
+        minutes, seconds = divmod(remainder, 60)
+        return f"{hours:02}时{minutes:02}分{seconds:02}秒"
+
     def check_already_running(self) -> bool:
         ''' 检查是否已经运行
         Returns
@@ -137,9 +142,10 @@ class TrayIcon(object):
         #     win32gui.DestroyWindow(self.hwnd)
         if lparam == win32con.WM_RBUTTONUP:
             menu = win32gui.CreatePopupMenu()
+            win32gui.AppendMenu(menu, win32con.MF_DISABLED, 0, "剩余时长 {}".format(self._seconds_to_hms(self.legod.lasttime)))
             win32gui.AppendMenu(menu, win32con.MF_STRING, 1023, "打开雷神加速器")
             win32gui.AppendMenu(menu, win32con.MF_STRING, 1024, "暂停时长")
-            win32gui.AppendMenu(menu, win32con.MF_STRING, 1025, "设置")
+            win32gui.AppendMenu(menu, win32con.MF_STRING, 1025, "打开配置文件")
             win32gui.AppendMenu(menu, win32con.MF_STRING, 1026, "退出并暂停时长")
             win32gui.AppendMenu(menu, win32con.MF_DISABLED, 0, "自动暂停工具%s"%self.legod.version)
             win32gui.AppendMenu(menu, win32con.MF_DISABLED, 0, "Author: 6yy66yy")
