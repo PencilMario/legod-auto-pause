@@ -84,7 +84,7 @@ class TrayIcon(object):
             "" if not msg else "| 自动暂停[{}]".format(msg)
         ))
 
-    def _seconds_to_hms(seconds):
+    def _seconds_to_hms(self, seconds):
         hours, remainder = divmod(seconds, 3600)
         minutes, seconds = divmod(remainder, 60)
         return f"{hours:02}时{minutes:02}分{seconds:02}秒"
