@@ -79,7 +79,10 @@ class TrayIcon(object):
         if not self.legod.check_exsit():
             if not self.legod.check_stop_status():
                 msg = self.legod.pause()
-        self.taskbar_msg("自动暂停工具运行成功",'游戏列表:%s'%",".join(self.legod.applist).join((" | 自动暂停:[{}]".format(msg)) if msg else ""))
+        self.taskbar_msg("自动暂停工具运行成功","游戏列表:{} {}".format(
+            str(self.legod.applist),
+            "" if not msg else "| 自动暂停[{}]".format(msg)
+        ))
 
     def check_already_running(self) -> bool:
         ''' 检查是否已经运行
