@@ -169,7 +169,7 @@ class legod(object):
         0:正常,1:暂停
         '''
         
-        data=self.get_account_info()[1]['pause_status_id']
+        data=self.get_account_info()[1]
         status = data['pause_status_id']
         self.lasttime = data['expiry_time_samp']
         if(status == 1):
